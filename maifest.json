@@ -2,56 +2,43 @@
   "name": "Ting Tong - Task Management",
   "short_name": "Ting Tong",
   "description": "A beautiful task management app with notifications and Kanban boards",
-  "start_url": "/TingTong/",
-  "display": "standalone",
+  "start_url": "https://shilpha26.github.io/TingTong/",
+  "display": "standalone", 
   "background_color": "#0f172a",
   "theme_color": "#6366f1",
   "orientation": "portrait-primary",
-  "scope": "/TingTong/",
+  "scope": "https://shilpha26.github.io/TingTong/",
   "categories": ["productivity", "business", "utilities"],
   "lang": "en",
   "icons": [
     {
-      "src": "icon-96x96.png",
+      "src": "https://shilpha26.github.io/TingTong/icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icon-192x192.png",
-      "sizes": "192x192",
+      "src": "https://shilpha26.github.io/TingTong/icon-192x192.png",
+      "sizes": "192x192", 
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "https://shilpha26.github.io/TingTong/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/png", 
       "purpose": "maskable any"
     }
   ],
   "shortcuts": [
     {
       "name": "Add Task",
-      "short_name": "Add Task", 
-      "description": "Quickly add a new task",
-      "url": "/TingTong/?action=add-task",
+      "short_name": "Add Task",
+      "description": "Quickly add a new task", 
+      "url": "https://shilpha26.github.io/TingTong/?action=add-task",
       "icons": [
         {
-          "src": "icon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Kanban View",
-      "short_name": "Kanban",
-      "description": "Open Kanban board view", 
-      "url": "/TingTong/?view=kanban",
-      "icons": [
-        {
-          "src": "icon-192x192.png",
+          "src": "https://shilpha26.github.io/TingTong/icon-192x192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
