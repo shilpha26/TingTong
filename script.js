@@ -274,7 +274,7 @@ function editItem(itemKey, itemType) {
     if (newItemType) newItemType.value = itemType;
     if (newItemEmoji) newItemEmoji.value = item.emoji || '📋';
     if (modalTitle) modalTitle.textContent = `Edit ${itemType === 'board' ? 'Board' : 'List'}`;
-    if (createBtn) createBtn.textContent = 'Save Changes';
+    if (createBtn) createBtn.textContent = 'Save';
 
     if (listModal) {
         listModal.style.display = 'flex';
