@@ -1,0 +1,1494 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #1a1625 0%, #2d1b69 100%);
+    min-height: 100vh;
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+
+/* App Container */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    margin: 20px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    position: relative;
+}
+
+/* Mobile Header - Hidden on Desktop */
+.mobile-header {
+    display: none;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    position: relative;
+    z-index: 1001;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Hamburger Menu Button */
+.mobile-menu-toggle {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: #e2e8f0;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
+
+/* Hamburger Animation */
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    background: #6366f1;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+    background: #6366f1;
+}
+
+/* Mobile Logo */
+.mobile-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-logo-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.mobile-logo {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.mobile-view-toggle {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.mobile-view-toggle:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(99, 102, 241, 0.2);
+    position: relative;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    /* FIXED: Make sidebar scrollable on mobile */
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 0 24px 32px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Container and Image Styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    transition: all 0.2s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.view-toggle {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.view-toggle:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 32px 0;
+    /* FIXED: Allow navigation to scroll if content overflows */
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.nav-section {
+    margin-bottom: 32px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.add-list-btn {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.add-list-btn:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.2);
+}
+
+.nav-list, .custom-lists {
+    list-style: none;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    color: #cbd5e1;
+}
+
+.nav-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: #e2e8f0;
+}
+
+.nav-item.active {
+    background: rgba(99, 102, 241, 0.2);
+    color: white;
+    box-shadow: inset 4px 0 0 #6366f1;
+}
+
+.nav-icon {
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+.share-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    margin-left: auto;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-btn:hover {
+    opacity: 1;
+    background: rgba(99, 102, 241, 0.2);
+    color: #e2e8f0;
+    transform: scale(1.1);
+}
+
+.share-btn:active {
+    transform: scale(0.95);
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 32px;
+    background: #0f172a;
+    overflow-y: auto;
+}
+
+.task-input-container {
+    margin-bottom: 32px;
+}
+
+.task-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 16px;
+}
+
+.task-input {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 16px 20px;
+    font-size: 16px;
+    outline: none;
+    border-radius: 8px;
+    color: #e2e8f0;
+}
+
+.task-input::placeholder {
+    color: #64748b;
+}
+
+.task-input-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-input-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+/* FIXED: Make task options scrollable horizontally on mobile */
+.task-options {
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    /* FIXED: Allow horizontal scrolling on smaller screens */
+    overflow-x: auto;
+    min-width: 100%;
+}
+
+/* FIXED: Ensure task options don't break layout on mobile */
+@media (max-width: 768px) {
+    .task-options {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 16px;
+    }
+
+    .option-group {
+        min-width: 200px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 480px) {
+    .task-options {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .option-group {
+        min-width: 160px;
+    }
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.option-group label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #94a3b8;
+}
+
+.option-group input,
+.option-group select {
+    padding: 10px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.option-group input:focus,
+.option-group select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Task Sections */
+.task-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+}
+
+.section-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 2px;
+    margin-right: 12px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Task Item Styles */
+.task-item {
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: move;
+    position: relative;
+}
+
+.task-item:hover {
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    transform: translateY(-1px);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.task-item.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+    background: #0f172a;
+}
+
+.task-item.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #475569;
+    border-radius: 50%;
+    margin-right: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.task-checkbox.completed {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-color: #6366f1;
+    color: white;
+}
+
+.task-checkbox::after {
+    content: '✓';
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.task-checkbox.completed::after {
+    opacity: 1;
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #f1f5f9;
+}
+
+.task-name.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+    color: #64748b;
+}
+
+.task-meta {
+    font-size: 12px;
+    color: #94a3b8;
+    display: flex;
+    gap: 12px;
+    /* FIXED: Allow meta text to wrap on small screens */
+    flex-wrap: wrap;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.task-item:hover .task-actions {
+    opacity: 1;
+}
+
+.task-action {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.task-action:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Kanban Styles */
+.kanban-view {
+    width: 100%;
+}
+
+/* Kanban Task Input Styles */
+.kanban-task-input {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    align-items: center;
+}
+
+.kanban-input {
+    flex: 1;
+    border: none;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: border-color 0.2s ease;
+}
+
+.kanban-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.kanban-input::placeholder {
+    color: #64748b;
+}
+
+.kanban-add-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.kanban-add-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.kanban-add-btn:active {
+    transform: translateY(0);
+}
+
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    height: calc(100vh - 300px);
+    /* FIXED: Allow kanban board to scroll on smaller screens */
+    overflow-x: auto;
+    min-height: 400px;
+}
+
+.kanban-column {
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.column-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.task-count {
+    background: rgba(99, 102, 241, 0.2);
+    color: #e2e8f0;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.column-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 200px;
+    border: 2px dashed transparent;
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.2s ease;
+    /* FIXED: Allow column content to scroll if too many tasks */
+    overflow-y: auto;
+}
+
+.column-content.drag-over {
+    border-color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.column-content:empty::after {
+    content: "Drop tasks here";
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+.kanban-task {
+    background: #0f172a;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    cursor: move;
+    transition: all 0.2s ease;
+    border-left: 4px solid #6366f1;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.kanban-task:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.kanban-task.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+}
+
+.kanban-task-name {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #f1f5f9;
+    font-size: 14px;
+    line-height: 1.4;
+    /* FIXED: Allow task names to wrap properly */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.kanban-task-actions {
+    display: flex;
+    gap: 4px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.kanban-task:hover .kanban-task-actions {
+    opacity: 1;
+}
+
+.kanban-task-action {
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #e2e8f0;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kanban-task-action:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #1e293b;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 16px;
+    padding: 0;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    /* FIXED: Allow modal content to scroll if needed */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #f1f5f9;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #94a3b8;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+    color: #e2e8f0;
+}
+
+.modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-input {
+    padding: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.modal-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.modal-btn.secondary {
+    background: #374151;
+    color: #e2e8f0;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.modal-btn.secondary:hover {
+    background: #4b5563;
+}
+
+/* Simplified Share Modal Styles */
+.share-info {
+    margin-bottom: 16px;
+}
+
+.share-info p {
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.share-link-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.share-link-input {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* Success notification for copying */
+.copy-success {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 10001;
+    animation: slideInUp 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@keyframes slideInUp {
+    from { 
+        transform: translateY(100%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateY(0); 
+        opacity: 1; 
+    }
+}
+
+/* Summary Styles */
+.summary-view { 
+    padding: 20px 0; 
+}
+
+.summary-view h2 { 
+    margin-bottom: 20px; 
+    color: #f1f5f9; 
+}
+
+.summary-stats { 
+    display: flex; 
+    gap: 16px; 
+    margin-bottom: 30px; 
+    flex-wrap: wrap; 
+}
+
+.stat-card { 
+    background: linear-gradient(135deg, #6366f1, #8b5cf6); 
+    color: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    text-align: center; 
+    min-width: 120px; 
+    flex: 1;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.stat-card.overdue { 
+    background: linear-gradient(135deg, #ef4444, #dc2626); 
+}
+
+.stat-number { 
+    font-size: 28px; 
+    font-weight: 600; 
+    margin-bottom: 5px; 
+}
+
+.stat-label { 
+    font-size: 14px; 
+    opacity: 0.9; 
+}
+
+.lists-breakdown h3 { 
+    margin-bottom: 15px; 
+    color: #f1f5f9; 
+}
+
+.list-stat { 
+    padding: 10px; 
+    background: #1e293b; 
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 8px; 
+    margin-bottom: 8px;
+    color: #e2e8f0;
+}
+
+.background-info { 
+    margin-top: 20px; 
+    padding: 16px; 
+    background: rgba(99, 102, 241, 0.1); 
+    border-radius: 8px; 
+    border-left: 4px solid #6366f1;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.background-info h3 { 
+    margin: 0 0 10px 0; 
+    color: #f1f5f9; 
+}
+
+.background-info p { 
+    margin: 5px 0; 
+    color: #e2e8f0; 
+}
+
+.background-info em { 
+    color: #a78bfa; 
+}
+
+/* Drag and Drop Visual Feedback */
+.drop-zone {
+    border: 2px dashed #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    color: #6366f1;
+    font-weight: 500;
+    margin: 8px 0;
+    transition: all 0.2s ease;
+}
+
+.drop-zone.active {
+    background: rgba(99, 102, 241, 0.2);
+    border-style: solid;
+}
+
+/* Animation for task completion */
+@keyframes taskComplete {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.task-item.completing {
+    animation: taskComplete 0.3s ease;
+}
+
+/* Smooth transitions */
+.task-view {
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+}
+
+/* FIXED: Add scrollbar styles for horizontal scrolling */
+::-webkit-scrollbar:horizontal {
+    height: 6px;
+}
+
+/* Notification styles for dark theme */
+.in-page-notification {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.in-page-notification.urgent {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Enhanced focus states for dark theme */
+input:focus,
+select:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Improved hover states */
+.nav-item:hover,
+.task-item:hover,
+.kanban-task:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+/* Dark theme selection styles */
+::selection {
+    background: rgba(99, 102, 241, 0.3);
+    color: white;
+}
+
+::-moz-selection {
+    background: rgba(99, 102, 241, 0.3);
+    color: white;
+}
+
+/* MOBILE RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .app-container {
+        margin: 15px;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        background: linear-gradient(135deg, #1a1625 0%, #2d1b69 100%);
+    }
+
+    .app-container {
+        margin: 0;
+        border-radius: 0;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Show Mobile Header */
+    .mobile-header {
+        display: flex;
+    }
+
+    /* FIXED: Don't hide sidebar header on mobile - just reposition it */
+    .sidebar-header {
+        display: flex;
+        padding-top: 20px; /* Add some space at top */
+    }
+
+    /* FIXED: Mobile Sidebar positioning and visibility */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 300px; /* Slightly wider for better touch targets */
+        z-index: 999;
+        transform: translateX(-100%);
+        padding-top: 90px; /* Account for mobile header */
+        max-width: 85vw; /* Don't take full screen on very small devices */
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* FIXED: Ensure nav items are visible and touchable */
+    .nav-item {
+        padding: 16px 24px; /* Larger touch targets */
+        min-height: 48px; /* Minimum touch target size */
+    }
+
+    .nav-icon {
+        font-size: 20px; /* Larger icons for mobile */
+        margin-right: 16px;
+    }
+
+    .share-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    /* Mobile Main Content */
+    .main-content {
+        padding: 20px;
+        padding-top: 80px; /* Account for mobile header */
+        width: 100%;
+    }
+
+    /* Mobile Kanban */
+    .kanban-task-input {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .kanban-input {
+        width: 100%;
+    }
+
+    .kanban-add-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .kanban-board {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        height: auto;
+    }
+
+    .kanban-column {
+        padding: 16px;
+        min-height: 200px;
+        min-width: auto; /* Remove min-width on mobile */
+    }
+
+    .column-content {
+        min-height: 150px;
+    }
+
+    /* Mobile Task Items */
+    .task-item {
+        padding: 12px;
+    }
+
+    .task-actions {
+        opacity: 1; /* Always show on mobile */
+    }
+
+    .kanban-task-actions {
+        opacity: 1; /* Always show on mobile */
+        position: static;
+        margin-top: 8px;
+        justify-content: flex-end;
+    }
+
+    .kanban-task {
+        cursor: default;
+        padding-right: 12px;
+    }
+
+    /* Mobile Modals */
+    .modal-content {
+        margin: 20px;
+        width: calc(100% - 40px);
+        max-width: none;
+    }
+
+    /* Mobile Summary Stats */
+    .summary-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .stat-card {
+        min-width: auto;
+        padding: 16px;
+    }
+
+    .stat-number {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 280px; /* Slightly smaller for very small screens */
+    }
+
+    .main-content {
+        padding: 16px;
+        padding-top: 80px;
+    }
+
+    .task-input-wrapper {
+        padding: 2px;
+    }
+
+    .task-input {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .task-input-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+
+    .task-item {
+        padding: 10px;
+    }
+
+    .task-name {
+        font-size: 14px;
+    }
+
+    .task-meta {
+        font-size: 11px;
+    }
+
+    .section-title {
+        font-size: 16px;
+    }
+
+    /* Mobile hamburger adjustments */
+    .hamburger-line {
+        width: 20px;
+    }
+
+    .mobile-menu-toggle {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Mobile touch improvements for share buttons */
+@media (hover: none) and (pointer: coarse) {
+    .share-btn {
+        opacity: 0.8;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .share-btn:hover {
+        opacity: 1;
+    }
+
+    .task-actions {
+        opacity: 1;
+    }
+
+    .nav-item {
+        padding: 16px 24px;
+    }
+
+    .task-item {
+        cursor: default;
+    }
+
+    .kanban-task {
+        cursor: default;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .main-content {
+        padding-top: 70px;
+    }
+
+    .sidebar {
+        padding-top: 70px;
+    }
+
+    .mobile-header {
+        padding: 12px 20px;
+    }
+}
+
+/* FIXED: Scrollable elements indicator */
+.task-options::-webkit-scrollbar {
+    height: 4px;
+}
+
+.task-options::-webkit-scrollbar-track {
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 2px;
+}
+
+.task-options::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 2px;
+}
+
+.task-options::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo-image,
+    .mobile-logo-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hamburger-line {
+        transition: none;
+    }
+
+    .sidebar {
+        transition: none;
+    }
+
+    .sidebar-overlay {
+        transition: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .mobile-header,
+    .sidebar,
+    .task-actions,
+    .modal {
+        display: none !important;
+    }
+
+    .main-content {
+        padding: 0;
+        background: white !important;
+        color: black !important;
+    }
+
+    .task-item {
+        border: 1px solid #ccc !important;
+        background: white !important;
+        color: black !important;
+    }
+}

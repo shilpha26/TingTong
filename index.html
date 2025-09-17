@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ting Tong - Task Management</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Mobile Header (only visible on mobile) -->
+        <div class="mobile-header">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="mobile-logo-container">
+                <img src="tingtong.jpg" alt="Ting Tong" class="mobile-logo-image">
+                <h1 class="mobile-logo">Ting Tong</h1>
+            </div>
+            <button class="mobile-view-toggle" id="mobileViewToggle">
+                <span class="mobile-toggle-text">List</span>
+            </button>
+        </div>
+
+        <!-- Sidebar with overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="tingtong.jpg" alt="Ting Tong" class="logo-image">
+                    <h1 class="logo">Ting Tong</h1>
+                </div>
+                <button class="view-toggle" id="viewToggle">
+                    <span class="toggle-text">List</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <ul class="nav-list">
+                        <li class="nav-item active" data-filter="all">
+                            <span class="nav-icon">📄</span>
+                            All
+                        </li>
+                        <li class="nav-item" data-filter="today">
+                            <span class="nav-icon">📅</span>
+                            Today
+                        </li>
+                        <li class="nav-item" data-filter="week">
+                            <span class="nav-icon">📅</span>
+                            Next 7 Days
+                        </li>
+                        <li class="nav-item" data-filter="inbox">
+                            <span class="nav-icon">📥</span>
+                            Inbox
+                        </li>
+                        <li class="nav-item" data-filter="summary">
+                            <span class="nav-icon">📊</span>
+                            Summary
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Lists Section (List View Only) -->
+                <div class="nav-section" id="listsSection">
+                    <div class="section-header">
+                        <span>Lists</span>
+                        <button class="add-list-btn" id="addListBtn" title="Add new list">+</button>
+                    </div>
+                    <ul class="nav-list" id="listSection">
+                        <!-- Lists will be populated by JavaScript -->
+                    </ul>
+                </div>
+
+                <!-- Boards Section (Kanban View Only) -->
+                <div class="nav-section" id="boardsSection" style="display: none;">
+                    <div class="section-header">
+                        <span>Boards</span>
+                        <button class="add-list-btn" id="addBoardBtn" title="Add new board">+</button>
+                    </div>
+                    <ul class="nav-list" id="boardSection">
+                        <!-- Boards will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- Task Input Container - Only show in List View -->
+            <div class="task-input-container" id="listTaskInput">
+                <div class="task-input-wrapper">
+                    <input type="text" id="taskInput" class="task-input" placeholder="What do you want to accomplish?">
+                    <button id="addTaskBtn" class="task-input-btn">+</button>
+                </div>
+                <div id="taskOptions" class="task-options" style="display: none;">
+                    <div class="option-group">
+                        <label for="taskDateTime">Due Date & Time</label>
+                        <input type="datetime-local" id="taskDateTime">
+                    </div>
+                    <div class="option-group">
+                        <label for="taskList">List</label>
+                        <select id="taskList">
+                            <option value="inbox">Inbox</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="taskRingtone">Ringtone</label>
+                        <select id="taskRingtone">
+                            <option value="">No ringtone</option>
+                            <option value="bell">Bell</option>
+                            <option value="chime">Chime</option>
+                            <option value="notification">Notification</option>
+                            <option value="custom">Upload Custom</option>
+                        </select>
+                        <input type="file" id="customRingtone" accept="audio/*" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div id="listView" class="task-view">
+                <div class="task-section">
+                    <h3 class="section-title">⚠️ Overdue</h3>
+                    <div class="task-list" id="overdueTasks"></div>
+                </div>
+
+                <div class="task-section">
+                    <h3 class="section-title">📅 Today</h3>
+                    <div class="task-list" id="todayTasks"></div>
+                </div>
+
+                <div class="task-section">
+                    <h3 class="section-title">📝 No Date</h3>
+                    <div class="task-list" id="noDateTasks"></div>
+                </div>
+
+                <div class="task-section">
+                    <h3 class="section-title">✅ Completed</h3>
+                    <div class="task-list" id="completedTasks"></div>
+                </div>
+            </div>
+
+            <!-- Kanban View -->
+            <div id="kanbanView" class="task-view kanban-view" style="display: none;">
+                <!-- UPDATED: Simplified Kanban Task Input (Removed Board Selector) -->
+                <div class="kanban-task-input">
+                    <input type="text" id="kanbanTaskInput" class="kanban-input" placeholder="Add a new task...">
+                    <button id="addKanbanTaskBtn" class="kanban-add-btn">Add Task</button>
+                </div>
+
+                <div class="kanban-board">
+                    <div class="kanban-column" data-status="backlog">
+                        <div class="column-header">
+                            <h3>Backlog</h3>
+                            <span class="task-count" id="backlogCount">0</span>
+                        </div>
+                        <div class="column-content" id="backlogColumn"></div>
+                    </div>
+
+                    <div class="kanban-column" data-status="todo">
+                        <div class="column-header">
+                            <h3>To Do</h3>
+                            <span class="task-count" id="todoCount">0</span>
+                        </div>
+                        <div class="column-content" id="todoColumn"></div>
+                    </div>
+
+                    <div class="kanban-column" data-status="doing">
+                        <div class="column-header">
+                            <h3>Doing</h3>
+                            <span class="task-count" id="doingCount">0</span>
+                        </div>
+                        <div class="column-content" id="doingColumn"></div>
+                    </div>
+
+                    <div class="kanban-column" data-status="done">
+                        <div class="column-header">
+                            <h3>Done</h3>
+                            <span class="task-count" id="doneCount">0</span>
+                        </div>
+                        <div class="column-content" id="doneColumn"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create New List/Board Modal with Emoji Picker -->
+    <div id="listModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Create New Item</h3>
+                <button id="closeModal" class="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="option-group">
+                    <label for="newItemType">Type</label>
+                    <select id="newItemType" class="modal-input">
+                        <option value="list">📋 List (for List View)</option>
+                        <option value="board">🗂️ Board (for Kanban View)</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label for="newListName">Name</label>
+                    <input type="text" id="newListName" class="modal-input" placeholder="Enter name...">
+                </div>
+
+                <div class="option-group">
+                    <label for="newItemEmoji">Emoji</label>
+                    <select id="newItemEmoji" class="modal-input emoji-picker">
+                        <option value="📋">📋 Default</option>
+                        <option value="📥">📥 Inbox</option>
+                        <option value="💼">💼 Work</option>
+                        <option value="🏠">🏠 Personal</option>
+                        <option value="👋">👋 Welcome</option>
+                        <option value="💜">💜 Shilpha</option>
+                        <option value="🗂️">🗂️ Board</option>
+                        <option value="🎯">🎯 Goals</option>
+                        <option value="📊">📊 Projects</option>
+                        <option value="⚡">⚡ Quick</option>
+                        <option value="🚀">🚀 Launch</option>
+                        <option value="💡">💡 Ideas</option>
+                        <option value="📱">📱 Tech</option>
+                        <option value="🎨">🎨 Creative</option>
+                        <option value="🏆">🏆 Goals</option>
+                        <option value="📝">📝 Notes</option>
+                        <option value="🔥">🔥 Priority</option>
+                        <option value="⭐">⭐ Favorites</option>
+                        <option value="🎉">🎉 Events</option>
+                        <option value="📚">📚 Learning</option>
+                        <option value="🛠️">🛠️ Tools</option>
+                        <option value="🌟">🌟 Special</option>
+                        <option value="🎮">🎮 Gaming</option>
+                        <option value="🏋️">🏋️ Fitness</option>
+                        <option value="🍕">🍕 Food</option>
+                        <option value="✈️">✈️ Travel</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button id="createListBtn" class="modal-btn primary">Create</button>
+                    <button id="cancelListBtn" class="modal-btn secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simplified Share List Modal -->
+    <div id="shareModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="shareModalTitle">Share Item</h3>
+                <button id="closeShareModal" class="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-info">
+                    <p id="shareDescription">Share this item with others:</p>
+                    <div class="share-link-container">
+                        <input type="text" id="shareLink" class="modal-input share-link-input" readonly placeholder="Generating link...">
+                        <button id="copyLinkBtn" class="copy-btn" title="Copy link">📋</button>
+                    </div>
+                </div>
+                <div class="share-options">
+                    <button id="closeShareBtn" class="modal-btn secondary" style="width: 100%; margin-top: 12px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Task</h3>
+                <button id="closeEditModal" class="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="editTaskName" class="modal-input" placeholder="Task name...">
+                <input type="datetime-local" id="editTaskDateTime" class="modal-input">
+                <select id="editTaskList" class="modal-input">
+                    <option value="inbox">Inbox</option>
+                </select>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button id="saveEditBtn" class="modal-btn primary">Save Changes</button>
+                    <button id="cancelEditBtn" class="modal-btn secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPDATED: Edit Kanban Task Modal (Removed Board Selector) -->
+    <div id="editKanbanModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Task</h3>
+                <button id="closeEditKanbanModal" class="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="editKanbanTaskName" class="modal-input" placeholder="Task name...">
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button id="saveKanbanEditBtn" class="modal-btn primary">Save Changes</button>
+                    <button id="cancelKanbanEditBtn" class="modal-btn secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
