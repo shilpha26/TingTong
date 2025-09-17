@@ -330,7 +330,7 @@
     <!-- Scripts -->
     <script src="script.js"></script>
     <!-- PWA Service Worker Registration -->
-   <script>
+     <script>
         // Register service worker for PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -343,6 +343,55 @@
                     });
             });
         }
+
+        // Handle PWA installation prompt
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('📱 Ting Tong PWA: Install prompt triggered');
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            const installPrompt = document.createElement('div');
+            installPrompt.id = 'installPrompt';
+            installPrompt.innerHTML = `
+                <div style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3); z-index: 10000; max-width: 300px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <span style="font-size: 20px;">📱</span>
+                        <strong>Install Ting Tong</strong>
+                    </div>
+                    <p style="margin: 0 0 12px 0; font-size: 14px; opacity: 0.9;">Add to your home screen for the best experience!</p>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="installBtn" style="background: white; color: #6366f1; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; flex: 1;">Install</button>
+                        <button id="dismissBtn" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Later</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(installPrompt);
+
+            document.getElementById('installBtn').addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('📱 User choice:', outcome);
+                    deferredPrompt = null;
+                }
+                installPrompt.remove();
+            });
+
+            document.getElementById('dismissBtn').addEventListener('click', () => {
+                installPrompt.remove();
+            });
+        }
+
+        // Handle successful installation
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('✅ Ting Tong PWA: App installed successfully!');
+        });
     </script>
 </body>
 
