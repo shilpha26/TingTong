@@ -1,0 +1,61 @@
+{
+  "name": "Ting Tong - Task Management",
+  "short_name": "Ting Tong",
+  "description": "A beautiful task management app with notifications and Kanban boards",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "categories": ["productivity", "business", "utilities"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./icon files/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./icon files/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "./icon files/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Task",
+      "short_name": "Add Task",
+      "description": "Quickly add a new task",
+      "url": "./?action=add-task",
+      "icons": [
+        {
+          "src": "./icon files/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Kanban View",
+      "short_name": "Kanban",
+      "description": "Open Kanban board view",
+      "url": "./?view=kanban",
+      "icons": [
+        {
+          "src": "./icon files/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

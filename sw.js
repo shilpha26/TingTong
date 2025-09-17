@@ -1,14 +1,17 @@
-// Ting Tong Service Worker v1.0
+// Ting Tong Service Worker v1.0 - CORRECTED
 const CACHE_NAME = 'ting-tong-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json',
-  '/icon files/tingtong.jpg',
-  '/icon files/icon-192x192.png',
-  '/icon files/icon-512x512.png',
+  './',
+  './index.html',
+  './styles.css',
+  './script.js', 
+  './manifest.json',
+  './tingtong.jpg',                      // FIXED: tingtong.jpg is in root
+  './icon files/icon-96x96.png',        // FIXED: Icons are in subfolder
+  './icon files/icon-192x192.png',      // FIXED: Icons are in subfolder
+  './icon files/icon-512x512.png',      // FIXED: Icons are in subfolder
+  './apple-touch-icon.png',             // If you have this file
+  './favicon.ico',                      // If you have this file
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap'
 ];
 
@@ -20,6 +23,9 @@ self.addEventListener('install', event => {
       .then(cache => {
         console.log('📦 Ting Tong SW: Caching app shell');
         return cache.addAll(urlsToCache);
+      })
+      .catch(error => {
+        console.error('❌ Ting Tong SW: Cache addAll failed:', error);
       })
   );
   self.skipWaiting();
@@ -73,14 +79,14 @@ async function doBackgroundSync() {
   console.log('📝 Ting Tong SW: Processing offline tasks...');
 }
 
-// Push notification handling
+// Push notification handling - FIXED PATHS
 self.addEventListener('push', event => {
   console.log('🔔 Ting Tong SW: Push notification received');
 
   const options = {
     body: event.data ? event.data.text() : 'You have a task reminder!',
-    icon: '/icon-192x192.png',
-    badge: '/icon-72x72.png',
+    icon: './icon files/icon-192x192.png',      // FIXED: Correct path
+    badge: './icon files/icon-192x192.png',     // FIXED: Use existing file
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -90,12 +96,12 @@ self.addEventListener('push', event => {
       {
         action: 'explore',
         title: 'Open App',
-        icon: '/icon-192x192.png'
+        icon: './icon files/icon-192x192.png'   // FIXED: Correct path
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/icon-192x192.png'
+        icon: './icon files/icon-192x192.png'   // FIXED: Correct path
       }
     ]
   };
@@ -112,7 +118,7 @@ self.addEventListener('notificationclick', event => {
 
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow('./')  // FIXED: Use relative path
     );
   }
 });

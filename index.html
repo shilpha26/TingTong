@@ -16,14 +16,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Ting Tong">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
-
-    <!-- Microsoft Windows PWA Support -->
-    <meta name="msapplication-TileColor" content="#6366f1">
-    <meta name="msapplication-TileImage" content="icon-144x144.png">
-    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="apple-touch-icon" href="icon files/icon-192x192.png">
 
     <!-- SEO and Social -->
     <meta name="description" content="A beautiful task management app with notifications, due dates, and Kanban boards. Stay organized and never miss a deadline.">
@@ -32,327 +25,31 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yoursite.com/">
+    <meta property="og:url" content="https://shilpha26.github.io/TingTong/">
     <meta property="og:title" content="Ting Tong - Task Management">
     <meta property="og:description" content="A beautiful task management app with notifications, due dates, and Kanban boards.">
-    <meta property="og:image" content="https://yoursite.com/icon-512x512.png">
+    <meta property="og:image" content="https://shilpha26.github.io/TingTong/icon%20files/icon-512x512.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yoursite.com/">
+    <meta property="twitter:url" content="https://shilpha26.github.io/TingTong/">
     <meta property="twitter:title" content="Ting Tong - Task Management">
     <meta property="twitter:description" content="A beautiful task management app with notifications, due dates, and Kanban boards.">
-    <meta property="twitter:image" content="https://yoursite.com/icon-512x512.png">
+    <meta property="twitter:image" content="https://shilpha26.github.io/TingTong/icon%20files/icon-512x512.png">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Standard Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Mobile Header (only visible on mobile) -->
-        <div class="mobile-header">
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            <div class="mobile-logo-container">
-                <img src="tingtong.jpg" alt="Ting Tong" class="mobile-logo-image">
-                <h1 class="mobile-logo">Ting Tong</h1>
-            </div>
-            <button class="mobile-view-toggle" id="mobileViewToggle">
-                <span class="mobile-toggle-text">List</span>
-            </button>
-        </div>
-
-        <!-- Sidebar with overlay for mobile -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-container">
-                    <img src="tingtong.jpg" alt="Ting Tong" class="logo-image">
-                    <h1 class="logo">Ting Tong</h1>
-                </div>
-                <button class="view-toggle" id="viewToggle">
-                    <span class="toggle-text">List</span>
-                </button>
-            </div>
-
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <ul class="nav-list">
-                        <li class="nav-item active" data-filter="all">
-                            <span class="nav-icon">📄</span>
-                            All
-                        </li>
-                        <li class="nav-item" data-filter="today">
-                            <span class="nav-icon">📅</span>
-                            Today
-                        </li>
-                        <li class="nav-item" data-filter="week">
-                            <span class="nav-icon">📅</span>
-                            Next 7 Days
-                        </li>
-                        <li class="nav-item" data-filter="inbox">
-                            <span class="nav-icon">📥</span>
-                            Inbox
-                        </li>
-                        <li class="nav-item" data-filter="summary">
-                            <span class="nav-icon">📊</span>
-                            Summary
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Lists Section (List View Only) -->
-                <div class="nav-section" id="listsSection">
-                    <div class="section-header">
-                        <span>Lists</span>
-                        <button class="add-list-btn" id="addListBtn" title="Add new list">+</button>
-                    </div>
-                    <ul class="nav-list" id="listSection">
-                        <!-- Lists will be populated by JavaScript -->
-                    </ul>
-                </div>
-
-                <!-- Boards Section (Kanban View Only) -->
-                <div class="nav-section" id="boardsSection" style="display: none;">
-                    <div class="section-header">
-                        <span>Boards</span>
-                        <button class="add-list-btn" id="addBoardBtn" title="Add new board">+</button>
-                    </div>
-                    <ul class="nav-list" id="boardSection">
-                        <!-- Boards will be populated by JavaScript -->
-                    </ul>
-                </div>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <!-- Task Input Container - Only show in List View -->
-            <div class="task-input-container" id="listTaskInput">
-                <div class="task-input-wrapper">
-                    <input type="text" id="taskInput" class="task-input" placeholder="What do you want to accomplish?">
-                    <button id="addTaskBtn" class="task-input-btn">+</button>
-                </div>
-                <div id="taskOptions" class="task-options" style="display: none;">
-                    <div class="option-group">
-                        <label for="taskDateTime">Due Date & Time</label>
-                        <input type="datetime-local" id="taskDateTime">
-                    </div>
-                    <div class="option-group">
-                        <label for="taskList">List</label>
-                        <select id="taskList">
-                            <option value="inbox">Inbox</option>
-                        </select>
-                    </div>
-                    <div class="option-group">
-                        <label for="taskRingtone">Ringtone</label>
-                        <select id="taskRingtone">
-                            <option value="">No ringtone</option>
-                            <option value="bell">Bell</option>
-                            <option value="chime">Chime</option>
-                            <option value="notification">Notification</option>
-                            <option value="custom">Upload Custom</option>
-                        </select>
-                        <!-- FIXED: File picker now accepts all audio formats and shows audio files -->
-                        <input type="file" id="customRingtone" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac" style="display: none;">
-                    </div>
-                </div>
-            </div>
-
-            <!-- List View -->
-            <div id="listView" class="task-view">
-                <div class="task-section">
-                    <h3 class="section-title">⚠️ Overdue</h3>
-                    <div class="task-list" id="overdueTasks"></div>
-                </div>
-
-                <div class="task-section">
-                    <h3 class="section-title">📅 Today</h3>
-                    <div class="task-list" id="todayTasks"></div>
-                </div>
-
-                <div class="task-section">
-                    <h3 class="section-title">📝 No Date</h3>
-                    <div class="task-list" id="noDateTasks"></div>
-                </div>
-
-                <div class="task-section">
-                    <h3 class="section-title">✅ Completed</h3>
-                    <div class="task-list" id="completedTasks"></div>
-                </div>
-            </div>
-
-            <!-- Kanban View -->
-            <div id="kanbanView" class="task-view kanban-view" style="display: none;">
-                <!-- UPDATED: Simplified Kanban Task Input (Removed Board Selector) -->
-                <div class="kanban-task-input">
-                    <input type="text" id="kanbanTaskInput" class="kanban-input" placeholder="Add a new task...">
-                    <button id="addKanbanTaskBtn" class="kanban-add-btn">Add Task</button>
-                </div>
-
-                <div class="kanban-board">
-                    <div class="kanban-column" data-status="backlog">
-                        <div class="column-header">
-                            <h3>Backlog</h3>
-                            <span class="task-count" id="backlogCount">0</span>
-                        </div>
-                        <div class="column-content" id="backlogColumn"></div>
-                    </div>
-
-                    <div class="kanban-column" data-status="todo">
-                        <div class="column-header">
-                            <h3>To Do</h3>
-                            <span class="task-count" id="todoCount">0</span>
-                        </div>
-                        <div class="column-content" id="todoColumn"></div>
-                    </div>
-
-                    <div class="kanban-column" data-status="doing">
-                        <div class="column-header">
-                            <h3>Doing</h3>
-                            <span class="task-count" id="doingCount">0</span>
-                        </div>
-                        <div class="column-content" id="doingColumn"></div>
-                    </div>
-
-                    <div class="kanban-column" data-status="done">
-                        <div class="column-header">
-                            <h3>Done</h3>
-                            <span class="task-count" id="doneCount">0</span>
-                        </div>
-                        <div class="column-content" id="doneColumn"></div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Create New List/Board Modal with Emoji Picker -->
-    <div id="listModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Create New Item</h3>
-                <button id="closeModal" class="close-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="option-group">
-                    <label for="newItemType">Type</label>
-                    <select id="newItemType" class="modal-input">
-                        <option value="list">📋 List (for List View)</option>
-                        <option value="board">🗂️ Board (for Kanban View)</option>
-                    </select>
-                </div>
-
-                <div class="option-group">
-                    <label for="newListName">Name</label>
-                    <input type="text" id="newListName" class="modal-input" placeholder="Enter name...">
-                </div>
-
-                <div class="option-group">
-                    <label for="newItemEmoji">Emoji</label>
-                    <select id="newItemEmoji" class="modal-input emoji-picker">
-                        <option value="📋">📋 Default</option>
-                        <option value="📥">📥 Inbox</option>
-                        <option value="💼">💼 Work</option>
-                        <option value="🏠">🏠 Personal</option>
-                        <option value="👋">👋 Welcome</option>
-                        <option value="💜">💜 Shilpha</option>
-                        <option value="🗂️">🗂️ Board</option>
-                        <option value="🎯">🎯 Goals</option>
-                        <option value="📊">📊 Projects</option>
-                        <option value="⚡">⚡ Quick</option>
-                        <option value="🚀">🚀 Launch</option>
-                        <option value="💡">💡 Ideas</option>
-                        <option value="📱">📱 Tech</option>
-                        <option value="🎨">🎨 Creative</option>
-                        <option value="🏆">🏆 Goals</option>
-                        <option value="📝">📝 Notes</option>
-                        <option value="🔥">🔥 Priority</option>
-                        <option value="⭐">⭐ Favorites</option>
-                        <option value="🎉">🎉 Events</option>
-                        <option value="📚">📚 Learning</option>
-                        <option value="🛠️">🛠️ Tools</option>
-                        <option value="🌟">🌟 Special</option>
-                        <option value="🎮">🎮 Gaming</option>
-                        <option value="🏋️">🏋️ Fitness</option>
-                        <option value="🍕">🍕 Food</option>
-                        <option value="✈️">✈️ Travel</option>
-                    </select>
-                </div>
-
-                <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button id="createListBtn" class="modal-btn primary">Create</button>
-                    <button id="cancelListBtn" class="modal-btn secondary">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Simplified Share List Modal -->
-    <div id="shareModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="shareModalTitle">Share Item</h3>
-                <button id="closeShareModal" class="close-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="share-info">
-                    <p id="shareDescription">Share this item with others:</p>
-                    <div class="share-link-container">
-                        <input type="text" id="shareLink" class="modal-input share-link-input" readonly placeholder="Generating link...">
-                        <button id="copyLinkBtn" class="copy-btn" title="Copy link">📋</button>
-                    </div>
-                </div>
-                <div class="share-options">
-                    <button id="closeShareBtn" class="modal-btn secondary" style="width: 100%; margin-top: 12px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Task Modal -->
-    <div id="editTaskModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Task</h3>
-                <button id="closeEditModal" class="close-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="editTaskName" class="modal-input" placeholder="Task name...">
-                <input type="datetime-local" id="editTaskDateTime" class="modal-input">
-                <select id="editTaskList" class="modal-input">
-                    <option value="inbox">Inbox</option>
-                </select>
-                <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button id="saveEditBtn" class="modal-btn primary">Save Changes</button>
-                    <button id="cancelEditBtn" class="modal-btn secondary">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- UPDATED: Edit Kanban Task Modal (Removed Board Selector) -->
-    <div id="editKanbanModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Task</h3>
-                <button id="closeEditKanbanModal" class="close-modal">×</button>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="editKanbanTaskName" class="modal-input" placeholder="Task name...">
-                <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button id="saveKanbanEditBtn" class="modal-btn primary">Save Changes</button>
-                    <button id="cancelKanbanEditBtn" class="modal-btn secondary">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Your existing body content stays the same -->
+    <!-- Just replace the <head> section with the corrected version above -->
 
     <!-- Scripts -->
     <script src="script.js"></script>
@@ -365,117 +62,12 @@
                 navigator.serviceWorker.register('./sw.js')
                     .then(function(registration) {
                         console.log('🚀 Ting Tong PWA: Service worker registered successfully:', registration.scope);
-
-                        // Check for updates
-                        registration.addEventListener('updatefound', function() {
-                            console.log('📦 Ting Tong PWA: New version available!');
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', function() {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // Show update notification
-                                    if (window.showNotification) {
-                                        showNotification('🔄 Update Available', 'A new version of Ting Tong is ready!', null, false);
-                                    }
-                                }
-                            });
-                        });
                     })
                     .catch(function(error) {
                         console.log('❌ Ting Tong PWA: Service worker registration failed:', error);
                     });
             });
         }
-
-        // Handle PWA installation prompt
-        let deferredPrompt;
-        let installButton;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('📱 Ting Tong PWA: Install prompt triggered');
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
-            e.preventDefault();
-            // Stash the event so it can be triggered later
-            deferredPrompt = e;
-
-            // Show custom install button if needed
-            showInstallPrompt();
-        });
-
-        function showInstallPrompt() {
-            // Create install prompt (you can customize this)
-            const installPrompt = document.createElement('div');
-            installPrompt.id = 'installPrompt';
-            installPrompt.innerHTML = `
-                <div style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3); z-index: 10000; max-width: 300px; animation: slideInUp 0.3s ease;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-                        <span style="font-size: 20px;">📱</span>
-                        <strong>Install Ting Tong</strong>
-                    </div>
-                    <p style="margin: 0 0 12px 0; font-size: 14px; opacity: 0.9;">Add to your home screen for the best experience!</p>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="installBtn" style="background: white; color: #6366f1; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; flex: 1;">Install</button>
-                        <button id="dismissBtn" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Later</button>
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(installPrompt);
-
-            // Handle install button click
-            document.getElementById('installBtn').addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log('📱 Ting Tong PWA: User choice:', outcome);
-                    deferredPrompt = null;
-                }
-                installPrompt.remove();
-            });
-
-            // Handle dismiss button
-            document.getElementById('dismissBtn').addEventListener('click', () => {
-                installPrompt.remove();
-            });
-
-            // Auto-dismiss after 10 seconds
-            setTimeout(() => {
-                if (installPrompt.parentNode) {
-                    installPrompt.remove();
-                }
-            }, 10000);
-        }
-
-        // Handle successful installation
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('✅ Ting Tong PWA: App was successfully installed!');
-            if (window.showNotification) {
-                showNotification('🎉 Welcome!', 'Ting Tong has been installed successfully!', null, false);
-            }
-        });
-
-        // Handle URL shortcuts and deep linking
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const action = urlParams.get('action');
-            const view = urlParams.get('view');
-
-            // Handle shortcuts from PWA manifest
-            if (action === 'add-task') {
-                setTimeout(() => {
-                    const taskInput = document.getElementById('taskInput');
-                    if (taskInput) {
-                        taskInput.focus();
-                    }
-                }, 1000);
-            } else if (view === 'kanban') {
-                setTimeout(() => {
-                    const viewToggle = document.getElementById('viewToggle');
-                    if (viewToggle && viewToggle.querySelector('.toggle-text').textContent === 'List') {
-                        viewToggle.click();
-                    }
-                }, 1000);
-            }
-        });
     </script>
 </body>
 
