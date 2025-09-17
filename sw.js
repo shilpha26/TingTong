@@ -1,14 +1,14 @@
 // Ting Tong Service Worker v1.0
 const CACHE_NAME = 'ting-tong-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json',
-  '/tingtong.jpg',
-  '/icon-192x192.png',
-  '/icon-512x512.png',
+  '/TingTong/',
+  '/TingTong/index.html',
+  '/TingTong/styles.css',
+  '/TingTong/script.js',
+  '/TingTong/manifest.json',
+  '/TingTong/tingtong.jpg',
+  '/TingTong/icon-192x192.png',
+  '/TingTong/icon-512x512.png',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap'
 ];
 
