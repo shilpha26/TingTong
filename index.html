@@ -5,10 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ting Tong - Task Management</title>
+
+    <!-- PWA Configuration -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
+    <meta name="background_color" content="#0f172a">
+    <meta name="display" content="standalone">
+
+    <!-- Apple iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ting Tong">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
+
+    <!-- Microsoft Windows PWA Support -->
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="msapplication-TileImage" content="icon-144x144.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- SEO and Social -->
+    <meta name="description" content="A beautiful task management app with notifications, due dates, and Kanban boards. Stay organized and never miss a deadline.">
+    <meta name="keywords" content="task management, todo, productivity, kanban, notifications, gtd">
+    <meta name="author" content="Ting Tong">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/">
+    <meta property="og:title" content="Ting Tong - Task Management">
+    <meta property="og:description" content="A beautiful task management app with notifications, due dates, and Kanban boards.">
+    <meta property="og:image" content="https://yoursite.com/icon-512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yoursite.com/">
+    <meta property="twitter:title" content="Ting Tong - Task Management">
+    <meta property="twitter:description" content="A beautiful task management app with notifications, due dates, and Kanban boards.">
+    <meta property="twitter:image" content="https://yoursite.com/icon-512x512.png">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
 </head>
 
 <body>
@@ -119,7 +163,8 @@
                             <option value="notification">Notification</option>
                             <option value="custom">Upload Custom</option>
                         </select>
-                        <input type="file" id="customRingtone" accept="audio/*" style="display: none;">
+                        <!-- FIXED: File picker now accepts all audio formats and shows audio files -->
+                        <input type="file" id="customRingtone" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac" style="display: none;">
                     </div>
                 </div>
             </div>
@@ -313,7 +358,129 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('🚀 Ting Tong PWA: Service worker registered successfully:', registration.scope);
+
+                        // Check for updates
+                        registration.addEventListener('updatefound', function() {
+                            console.log('📦 Ting Tong PWA: New version available!');
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', function() {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Show update notification
+                                    if (window.showNotification) {
+                                        showNotification('🔄 Update Available', 'A new version of Ting Tong is ready!', null, false);
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log('❌ Ting Tong PWA: Service worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Handle PWA installation prompt
+        let deferredPrompt;
+        let installButton;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('📱 Ting Tong PWA: Install prompt triggered');
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+
+            // Show custom install button if needed
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            // Create install prompt (you can customize this)
+            const installPrompt = document.createElement('div');
+            installPrompt.id = 'installPrompt';
+            installPrompt.innerHTML = `
+                <div style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3); z-index: 10000; max-width: 300px; animation: slideInUp 0.3s ease;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <span style="font-size: 20px;">📱</span>
+                        <strong>Install Ting Tong</strong>
+                    </div>
+                    <p style="margin: 0 0 12px 0; font-size: 14px; opacity: 0.9;">Add to your home screen for the best experience!</p>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="installBtn" style="background: white; color: #6366f1; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; flex: 1;">Install</button>
+                        <button id="dismissBtn" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer;">Later</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(installPrompt);
+
+            // Handle install button click
+            document.getElementById('installBtn').addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('📱 Ting Tong PWA: User choice:', outcome);
+                    deferredPrompt = null;
+                }
+                installPrompt.remove();
+            });
+
+            // Handle dismiss button
+            document.getElementById('dismissBtn').addEventListener('click', () => {
+                installPrompt.remove();
+            });
+
+            // Auto-dismiss after 10 seconds
+            setTimeout(() => {
+                if (installPrompt.parentNode) {
+                    installPrompt.remove();
+                }
+            }, 10000);
+        }
+
+        // Handle successful installation
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('✅ Ting Tong PWA: App was successfully installed!');
+            if (window.showNotification) {
+                showNotification('🎉 Welcome!', 'Ting Tong has been installed successfully!', null, false);
+            }
+        });
+
+        // Handle URL shortcuts and deep linking
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            const view = urlParams.get('view');
+
+            // Handle shortcuts from PWA manifest
+            if (action === 'add-task') {
+                setTimeout(() => {
+                    const taskInput = document.getElementById('taskInput');
+                    if (taskInput) {
+                        taskInput.focus();
+                    }
+                }, 1000);
+            } else if (view === 'kanban') {
+                setTimeout(() => {
+                    const viewToggle = document.getElementById('viewToggle');
+                    if (viewToggle && viewToggle.querySelector('.toggle-text').textContent === 'List') {
+                        viewToggle.click();
+                    }
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 
 </html>
