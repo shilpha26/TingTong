@@ -197,6 +197,12 @@ body {
     align-items: center;
 }
 
+/* Logo Container and Image Styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
 .logo-image {
     width: 32px;
@@ -1166,6 +1172,7 @@ button:focus {
         width: 300px;
         z-index: 999;
         transform: translateX(-100%);
+        padding-top: 90px;
         max-width: 85vw;
     }
 
